@@ -1,0 +1,31 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>INVITE Networks apt</title>
+<style>
+  :root { color-scheme: light dark; --fg: #1a1a1a; --bg: #ffffff; --code: #f3f4f6; }
+  @media (prefers-color-scheme: dark) { :root { --fg: #e5e7eb; --bg: #111827; --code: #1f2937; } }
+  body { font: 16px/1.5 system-ui, sans-serif; color: var(--fg); background: var(--bg); max-width: 46rem; margin: 2rem auto; padding: 0 16px; }
+  pre { background: var(--code); padding: 1rem; overflow-x: auto; border-radius: 6px; }
+</style>
+</head>
+<body>
+<h1>INVITE Networks apt repository</h1>
+<p>Signed packages for Debian 12+ and Ubuntu 22.04+, amd64 and arm64.</p>
+<pre>sudo install -d -m 0755 /etc/apt/keyrings
+curl -fsSL https://invite-networks.github.io/apt/invite-networks.asc |
+  sudo tee /etc/apt/keyrings/invite-networks.asc &gt;/dev/null
+sudo tee /etc/apt/sources.list.d/invite-networks.sources &gt;/dev/null &lt;&lt;'SRC'
+Types: deb
+URIs: https://invite-networks.github.io/apt
+Suites: stable
+Components: main
+Signed-By: /etc/apt/keyrings/invite-networks.asc
+SRC
+sudo apt update
+sudo apt install gantry</pre>
+<p>Source: <a href="https://github.com/invite-networks/apt">invite-networks/apt</a></p>
+</body>
+</html>

@@ -1,0 +1,39 @@
+name: publish
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+concurrency:
+  group: pages
+  cancel-in-progress: false
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deploy.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v4
+      - run: sudo apt-get update && sudo apt-get install -y apt-utils
+      - name: Build the repository index
+        run: scripts/build-index.sh site
+      - name: Sign
+        env:
+          APT_SIGNING_KEY: ${{ secrets.APT_SIGNING_KEY }}
+        run: |
+          export GNUPGHOME=$(mktemp -d)
+          printf '%s\n' "$APT_SIGNING_KEY" | gpg --batch --import
+          for suite in site/dists/*/; do
+            gpg --batch --yes --armor --detach-sign -o "$suite/Release.gpg" "$suite/Release"
+            gpg --batch --yes --clearsign -o "$suite/InRelease" "$suite/Release"
+          done
+          rm -rf "$GNUPGHOME"
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: site
+      - id: deploy
+        uses: actions/deploy-pages@v4

@@ -5,6 +5,8 @@ on:
   workflow_dispatch:
 permissions:
   contents: read
+  # deploy-pages reads the uploaded artifact through the Actions API.
+  actions: read
   pages: write
   id-token: write
 concurrency:

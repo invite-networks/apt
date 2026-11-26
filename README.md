@@ -27,6 +27,7 @@ sudo apt install gantry
 | Package | Source |
 |---|---|
 | gantry | [invite-networks/gantry](https://github.com/invite-networks/gantry) |
+| gantry-nautobot | [invite-networks/gantry-nautobot](https://github.com/invite-networks/gantry-nautobot) |
 | kanidm-unixd, libnss-kanidm, libpam-kanidm | Upstream [Kanidm](https://github.com/kanidm/kanidm) client, built for Debian 13 by the `kanidm-client-debs` workflow in invite-networks/ansible-linux |
 
 ## How it works
